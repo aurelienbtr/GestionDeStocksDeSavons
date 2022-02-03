@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'RecapitulatifListeSavon.dart';
+import 'naviguation_drawer.dart';
 
 
 
@@ -11,10 +12,11 @@ class ajoutSavon extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        drawer: NavigationDrawerWidget(),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              titredelapage,
+              titredelapageAjout,
               formulaireAjout,
               //la c'est mon widget : ajouter un savon
             ],
@@ -129,3 +131,11 @@ Widget date = Container(
     ],
   ),
 );
+
+
+Widget titredelapageAjout = AppBar(
+  title: Text('Ajouter un savon'),
+  centerTitle: true,
+  backgroundColor: Colors.red,
+);
+

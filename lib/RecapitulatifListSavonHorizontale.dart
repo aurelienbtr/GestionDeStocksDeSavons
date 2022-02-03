@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'naviguation_drawer.dart';
+
 class maListeDeSavonsHorizontale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        drawer: NavigationDrawerWidget(),
         body: SingleChildScrollView( // le fait de swiper
           child: Column(
             children: [
