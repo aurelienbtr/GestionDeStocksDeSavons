@@ -2,7 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'RecapitulatifListSavonHorizontale.dart';
 import 'RecapitulatifListeSavon.dart';
+import 'boutonHome.dart';
 import 'naviguation_drawer.dart';
 
 
@@ -18,6 +20,7 @@ class ajoutSavon extends StatelessWidget {
             children: [
               titredelapageAjout,
               formulaireAjout,
+
               //la c'est mon widget : ajouter un savon
             ],
           ),
@@ -139,3 +142,12 @@ Widget titredelapageAjout = AppBar(
   backgroundColor: Colors.red,
 );
 
+
+Widget boutonModifier = Container(
+    child : IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: () {
+        MaterialPageRoute(builder: (context) => maListeDeSavonsHorizontale());
+      },
+    )
+);
