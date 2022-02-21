@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "929571038512",
+    "project_id": "app-gestion-savon",
+    "storage_bucket": "app-gestion-savon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929571038512:android:e58ff1a1c57f7500b054f5",
+        "android_client_info": {
+          "package_name": "com.example.app_gestion_savon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929571038512-17hc9k87iavn5ig3oj42afr3d1tnlbck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf66tWzPOs-MM8hA1asA11DiEBmHX3uBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929571038512-17hc9k87iavn5ig3oj42afr3d1tnlbck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
