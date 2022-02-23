@@ -1,12 +1,12 @@
+import 'package:app_gestion_savon/src/list/OperationsSummary.dart';
+import 'package:app_gestion_savon/src/qr/QrGenerator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/AjoutSavon.dart';
-import '../pages/RecapBdd.dart';
-import '../pages/RecapitulatifListSavonHorizontale.dart';
-import '../pages/generator.dart';
-import '../pages/scan.dart';
+import '../src/add/AddSoap.dart';
+import '../src/qr/QrScan.dart';
+import '../src/list/SoapList.dart';
 import 'appbar.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -43,8 +43,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Column(
                     children: [
                       buildMenuItem(
-                        text: 'Recapitulatif',
-                        icon: Icons.message,
+                        text: 'Liste de Savons',
+                        icon: Icons.list_alt,
                         onClicked: () {
                           setState((){
                             w = const SoapList();
@@ -59,7 +59,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         icon: Icons.add,
                         onClicked: () {
                           setState((){
-                            w = ajoutSavon();
+                            w = AddSoap();
                             title = 'Ajouter un Savon';
                           });
                           Navigator.of(context).pop();
@@ -71,8 +71,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         icon: Icons.smartphone,
                         onClicked: () {
                           setState((){
-                            w = const QrScan3(title: 'Scanneur',);
-                            title = 'Scanneur';
+                            w = const QrScan();
+                            title = 'Scanner';
                           });
                           Navigator.of(context).pop();
                         },
@@ -82,8 +82,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         icon: Icons.qr_code_2,
                         onClicked: () {
                           setState((){
-                            w = const GenerateQRPage();
+                            w = const QrGenerator();
                             title = 'Générateur de Qr Codes';
+                          });
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      buildMenuItem(
+                        text: 'Récapitulatif des Opérations',
+                        icon: Icons.list,
+                        onClicked: () {
+                          setState((){
+                            w = const OperationsSummary();
+                            title = 'Récapitulatif des Opérations';
                           });
                           Navigator.of(context).pop();
                         },
@@ -96,7 +107,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         icon: Icons.account_circle,
                         onClicked: () {
                           setState((){
-                            w = const GenerateQRPage();
+                            w = const OperationsSummary();
                             title = 'Générateur de Qr Codes';
                           });
                           Navigator.of(context).pop();
@@ -108,7 +119,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         icon: Icons.settings,
                         onClicked: () {
                           setState((){
-                            w = const RecapBdd();
+                            w = const OperationsSummary();
                             title = 'Récapitulatif';
                           });
                           Navigator.of(context).pop();
@@ -143,7 +154,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     VoidCallback? onClicked,
   }) {
     const color = Colors.black;
-    final hoverColor = Colors.black26;
+    const hoverColor = Colors.black26;
 
     return ListTile(
       leading: Icon(icon, color: color),

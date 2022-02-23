@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart'; // new
 import 'package:firebase_core/firebase_core.dart'; // new
 import 'package:flutter/material.dart';
-import 'package:app_gestion_savon/src/test.dart';
+import 'package:app_gestion_savon/src/home/Connection.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -10,12 +10,14 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => ApplicationState(),
-      builder: (context, _) => App(),
+      builder: (context, _) => const App(),
     ),
   );
 }
 
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,10 +27,6 @@ class App extends StatelessWidget {
           highlightColor: Colors.red,
         ),
         primarySwatch: Colors.red,
-        /*
-        textTheme: GoogleFonts.robotoTextTheme(
-          Theme.of(context).textTheme,
-        ),*/
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const HomePage(),
@@ -41,7 +39,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ApplicationState>(
-      builder: (context, appState, _) => Test(
+      builder: (context, appState, _) => Connection(
         email: appState.email,
         loginState: appState.loginState,
         startLoginFlow: appState.startLoginFlow,
@@ -143,6 +141,5 @@ class ApplicationState extends ChangeNotifier {
   void signOut() {
     FirebaseAuth.instance.signOut();
   }
-
 }
 
