@@ -1,26 +1,26 @@
+import 'package:app_gestion_savon/src/home/Authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../qr/QrGenerator.dart';
 
-class SoapList extends StatefulWidget{
-  const SoapList({Key? key}) : super(key: key);
+class SoapList extends StatelessWidget{
+  const SoapList({Key? key, required this.txt}) : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() => _SoapListState();
-}
+  final String txt;
 
-class _SoapListState extends State<SoapList> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SoapInformation(),
+    return Scaffold(
+      body: SoapInformation(txt: txt,),
     );
   }
 }
 
 class SoapInformation extends StatefulWidget {
-  const SoapInformation({Key? key}) : super(key: key);
+  const SoapInformation({Key? key, required this.txt}) : super(key: key);
+
+  final String txt;
 
   @override
   _SoapInformationState createState() => _SoapInformationState();
@@ -28,7 +28,13 @@ class SoapInformation extends StatefulWidget {
 
 class _SoapInformationState extends State<SoapInformation> {
   final Stream<QuerySnapshot> _soapsStream = FirebaseFirestore.instance.collection('soaps').snapshots();
-  final TextEditingController _textController = TextEditingController();
+  TextEditingController _textController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController(text: widget.txt);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,9 +124,9 @@ Widget singleSoap(String name, String ref, String qte, String date, String docRe
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                increaseNumber(docRef, 1),
+                Authentication.lvl != 0 ? increaseNumber(docRef, 1) : Container(),
                 Text(qte, style: const TextStyle(color: Color(0xFFC2C2C2))),
-                increaseNumber(docRef,-1)
+                Authentication.lvl != 0 ? increaseNumber(docRef,-1) : Container(),
               ]
           ),
           Text(date, style: const TextStyle(color: Color(0xFFC2C2C2)))
@@ -196,7 +202,7 @@ Widget getQrButton(BuildContext context, String reference){
 Widget buttons(String docRef, BuildContext context, String reference){
   return Column(
     children: [
-      deleteButton(docRef),
+      Authentication.lvl != 0 ? deleteButton(docRef) : Container(),
       getQrButton(context, reference),
     ],
   );

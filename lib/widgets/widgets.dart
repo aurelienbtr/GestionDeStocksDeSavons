@@ -63,8 +63,7 @@ class StyledButton2 extends StatelessWidget {
 }
 
 class StyledButton extends StatelessWidget {
-  const StyledButton({Key? key, /*required this.child*/required this.txt, required this.onPressed}) : super(key: key);
-  //final Widget child;
+  const StyledButton({Key? key, required this.txt, required this.onPressed}) : super(key: key);
   final String txt;
   final void Function() onPressed;
 
@@ -74,6 +73,6 @@ class StyledButton extends StatelessWidget {
         backgroundColor: Colors.red,
         side: const BorderSide(color: Colors.white)),
     onPressed: onPressed,
-    child: /*child*/ Text(txt, style: const TextStyle(color: Colors.white),),
+    child: Text(txt, style: const TextStyle(color: Colors.white),),
   );
 }

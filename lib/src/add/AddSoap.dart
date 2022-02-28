@@ -13,13 +13,18 @@ class AddSoap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          addForm(nameCtrl, refCtrl, numberCtrl),
-        ],
-      ),
-    );
+    //if(Authentication.lvl != 0){
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            addForm(nameCtrl, refCtrl, numberCtrl),
+          ],
+        ),
+      );
+    //}
+    //else{
+    //  return const Text('Vous ne possédez pas les droits administrateurs');
+    //}
   }
 }
 

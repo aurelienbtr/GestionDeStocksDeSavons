@@ -1,10 +1,11 @@
 import 'package:app_gestion_savon/src/list/OperationsSummary.dart';
 import 'package:app_gestion_savon/src/qr/QrGenerator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../src/add/AddSoap.dart';
+import '../src/home/Authentication.dart';
+import '../src/list/UserList.dart';
 import '../src/qr/QrScan.dart';
 import '../src/list/SoapList.dart';
 import 'appbar.dart';
@@ -17,7 +18,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
-  Widget? w = const SoapList();
+  Widget? w = const SoapList(txt:'');
   String title = 'Liste de Savons';
 
   @override
@@ -47,13 +48,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         icon: Icons.list_alt,
                         onClicked: () {
                           setState((){
-                            w = const SoapList();
+                            w = const SoapList(txt: '');
                             title = 'Liste de Savons';
                           });
                           Navigator.of(context).pop();
                         },
                       ),
-                      const SizedBox(height: 8),
+                      Authentication.lvl != 0 ?
                       buildMenuItem(
                         text: 'Ajouter',
                         icon: Icons.add,
@@ -64,8 +65,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           });
                           Navigator.of(context).pop();
                         },
-                      ),
-                      const SizedBox(height: 8),
+                      )
+                      : const SizedBox.shrink(),
                       buildMenuItem(
                         text: 'Scanner',
                         icon: Icons.smartphone,
@@ -113,19 +114,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           Navigator.of(context).pop();
                         },
                       ),
-                      const SizedBox(height: 8),
+                      Authentication.lvl == 2 ?
                       buildMenuItem(
                         text: 'Paramètres',
                         icon: Icons.settings,
                         onClicked: () {
                           setState((){
-                            w = const OperationsSummary();
-                            title = 'Récapitulatif';
+                            w = const UserList();
+                            title = 'Paramètres';
                           });
                           Navigator.of(context).pop();
                         },
-                      ),
-                      const SizedBox(height: 8),
+                      ) : const SizedBox.shrink(),
                       buildMenuItem(
                         text: 'Se déconnecter',
                         icon: Icons.exit_to_app,

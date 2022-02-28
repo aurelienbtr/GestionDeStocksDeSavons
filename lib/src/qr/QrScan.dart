@@ -1,3 +1,4 @@
+import 'package:app_gestion_savon/src/list/SoapList.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -6,6 +7,7 @@ import 'package:images_picker/images_picker.dart';
 import 'package:scan/scan.dart';
 
 import '../../widgets/qrscan.dart';
+import '../../widgets/widgets.dart';
 
 
 class QrScan extends StatefulWidget {
@@ -45,35 +47,44 @@ class _QrScan extends State<QrScan> {
     return Center(
         child: Column(
           children: [
-            Text('Running on: $_platformVersion\n'),
+            Text('A partir de : $_platformVersion\n'),
             Wrap(
               children: [
-                ElevatedButton(
-                  child: const Text("parse from image"),
-                  onPressed: () async {
-                    List<Media>? res = await ImagesPicker.pick();
-                    if (res != null) {
-                      String? str = await Scan.parse(res[0].path);
-                      if (str != null) {
-                        setState(() {
-                          qrcode = str;
-                        });
-                      }
-                    }
-                  },
-                ),
-                ElevatedButton(
-                  child: const Text('go scan page'),
+                StyledButton(
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) {
                           return ScanPage();
                         }));
                   },
+                  txt: 'scanner avec l\'appareil',
+                ),
+                StyledButton2(
+                  onPressed: () async {
+                    List<Media>? res = await ImagesPicker.pick();
+                    if (res != null) {
+                      String? str = await Scan.parse(res[0].path);
+                      if (str != null) {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return Scaffold(
+                              appBar: AppBar(
+                                title: const Text('résultats du scan :'),
+                              ),
+                              body: Center(
+                                child: SoapInformation(txt: str),
+                              ),
+                            );
+                          },
+                        ));
+                      }
+                    }
+                  },
+                  txt: 'scanner à partir d\'une image',
                 ),
               ],
             ),
-            Text('scan result is $qrcode'),
+            Text('résultats du scan : $qrcode'),
           ],
         )
     );

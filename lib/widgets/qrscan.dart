@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scan/scan.dart';
 
+import '../src/list/SoapList.dart';
+
 class ScanPage extends StatelessWidget {
   ScanPage({Key? key}) : super(key: key);
 
@@ -23,10 +25,10 @@ class ScanPage extends StatelessWidget {
                   builder: (BuildContext context) {
                     return Scaffold(
                       appBar: AppBar(
-                        title: const Text('scan result'),
+                        title: const Text('résultats du scan :'),
                       ),
                       body: Center(
-                        child: Text(data),
+                        child: SoapInformation(txt: data),
                       ),
                     );
                   },
@@ -40,7 +42,7 @@ class ScanPage extends StatelessWidget {
               child: Row(
                 children: [
                   ElevatedButton(
-                    child: const Text("toggleTorchMode"),
+                    child: const Text("Flash"),
                     onPressed: () {
                       controller.toggleTorchMode();
                     },
@@ -52,7 +54,7 @@ class ScanPage extends StatelessWidget {
                     },
                   ),
                   ElevatedButton(
-                    child: const Text("resume"),
+                    child: const Text("reprendre"),
                     onPressed: () {
                       controller.resume();
                     },
