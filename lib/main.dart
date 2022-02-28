@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart'; // new
 import 'package:firebase_core/firebase_core.dart'; // new
 import 'package:flutter/material.dart';
-import 'package:app_gestion_savon/src/test.dart';
+import 'package:app_gestion_savon/src/home/Authentication.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -10,12 +10,12 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => ApplicationState(),
-      builder: (context, _) => App(),
+      builder: (context, _) => const App(),
     ),
   );
 }
-
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,23 +25,18 @@ class App extends StatelessWidget {
           highlightColor: Colors.red,
         ),
         primarySwatch: Colors.red,
-        /*
-        textTheme: GoogleFonts.robotoTextTheme(
-          Theme.of(context).textTheme,
-        ),*/
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const HomePage(),
     );
   }
 }
-
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Consumer<ApplicationState>(
-      builder: (context, appState, _) => Test(
+      builder: (context, appState, _) => Authentication(
         email: appState.email,
         loginState: appState.loginState,
         startLoginFlow: appState.startLoginFlow,
@@ -50,28 +45,22 @@ class HomePage extends StatelessWidget {
         cancelRegistration: appState.cancelRegistration,
         registerAccount: appState.registerAccount,
         signOut: appState.signOut,
-        pageId: 0,
       ),
     );
   }
 }
 
 class ApplicationState extends ChangeNotifier {
-  ApplicationState() {
-    init();
-  }
+  ApplicationState() { init(); }
 
   Future<void> init() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _loginState = ApplicationLoginState.loggedIn;
-      } else {
-        _loginState = ApplicationLoginState.loggedOut;
-      }
+      } else { _loginState = ApplicationLoginState.loggedOut; }
       notifyListeners();
     });
   }
@@ -79,11 +68,10 @@ class ApplicationState extends ChangeNotifier {
   ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
   ApplicationLoginState get loginState => _loginState;
 
-  String? _email;
-  String? get email => _email;
+  String? _email; String? get email => _email;
 
   void startLoginFlow() {
-    _loginState = ApplicationLoginState.emailAddress;
+    _loginState = ApplicationLoginState.loggedOut;
     notifyListeners();
   }
 
@@ -96,14 +84,10 @@ class ApplicationState extends ChangeNotifier {
       await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
       if (methods.contains('password')) {
         _loginState = ApplicationLoginState.password;
-      } else {
-        _loginState = ApplicationLoginState.register;
-      }
+      } else { _loginState = ApplicationLoginState.register; }
       _email = email;
       notifyListeners();
-    } on FirebaseAuthException catch (e) {
-      errorCallback(e);
-    }
+    } on FirebaseAuthException catch (e) { errorCallback(e); }
   }
 
   Future<void> signInWithEmailAndPassword(
@@ -122,7 +106,7 @@ class ApplicationState extends ChangeNotifier {
   }
 
   void cancelRegistration() {
-    _loginState = ApplicationLoginState.emailAddress;
+    _loginState = ApplicationLoginState.loggedOut;
     notifyListeners();
   }
 
@@ -143,6 +127,5 @@ class ApplicationState extends ChangeNotifier {
   void signOut() {
     FirebaseAuth.instance.signOut();
   }
-
 }
 
